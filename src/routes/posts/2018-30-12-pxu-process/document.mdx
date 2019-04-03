@@ -1,0 +1,117 @@
+import styles from '../document.general.css'
+import Paper from '@material-ui/core/Paper';
+import ClubhouseEx from '../Images/ClubhouseEx.png';
+
+<div className="Post">
+
+<div className="Image-container">
+  <img src="https://media.giphy.com/media/1xoAy1PDL5Zkc/giphy.gif" className="Image" alt="logo" />
+</div>
+
+<p>For each team at PxU, the workflow is a little different. The ideal workflow is something that make logical sense, provides every team member with the information they need, and isn't cumbersome to use/navigate.</p>
+
+<p>Since each team is working on different projects, which have different requirements, project lengths, and goals, each team will have to adapt to make their workflow best fit their situation.</p>
+
+<p>The current PxU Agency Workflow can be a tricky beast, but once you get it you should understand why things are the way they are. If not, bring it up with someone. Workflow is a constantly evolving thing, any input to make dealing with it easier is greatly appreciated.</p>
+
+<h2>Ticket Lifecycle</h2>
+
+<p>The process of creating a new ticket for work, it going through the stages of the workflow, and finally ending up as a releasable piece of software is a vast one. There are a lot of different states it goes through (most of which QA doesn't REALLY need to worry about), which I will go through now.</p>
+
+<div className="Image-container">
+  <img src={ClubhouseEx} className="Image" alt="logo" />
+</div>
+
+<h3>Backlog</h3>
+ <ul>
+  <li>All new tickets go to the backlog, it represents all work that needs to be done.</li> 
+  <li>Generally tickets that go here are created by the Project Manager, Designers, or Developers. This holds stories that pertain to the feature work being done for the project as outlined by the requirements document.</li>
+ </ul>
+
+<h3>Ready to Design</h3>
+ <ul>
+  <li>All UI portions of the site have to be designed. Any ticket placed into this State is waiting for the Designer to pick it up and do design work on it. </li>
+  <li>Some tickets will skip this step if it has no design requirements. </li>
+ </ul>
+
+<h3>Design In Progress</h3>
+ <ul>
+  <li>A State for the Designer to keep tickets they are currently working on.</li>
+  <li>This state is mostly just for visibility, and to allow the Designer to keep track of what ongoing tickets they have in case they get pulled off onto another piece of work.</li>
+ </ul>
+
+<h3>Ready to Develop </h3>
+ <ul>
+  <li>Once a ticket has been Designed, it should be ready for development.</li>
+  <li>Tickets here are stored and divided up between the available developers to be worked on. </li>
+ </ul>
+
+<h3>Development in Progress </h3>
+ <ul>
+  <li> Like the "Design in Progress" state, this is just for developers to keep track of what they are currently working on (and to give visibility to other team members). </li>
+  </ul>
+
+<h3>Ready for Code Review</h3>
+ <ul>
+  <li>Once a ticket is completed by a developer, it has to be code reviewed by another member of the team.</li>
+  </ul>
+
+<h3>Ready for Staging</h3>
+ <ul>
+  <li>Once a ticket has been code reviewed it goes here.</li>
+  <li>This is basically a "Done" column from the developers perspective. The development of the ticket is complete and now it has to be put into a build for QA.</li>
+  <li>Generally one developer handles taking these tickets and creating a new build for QA. Once the new build is ready and depoloyed to the staging site, they will move all the tickets that went into the build to the "Current Staging" state.</li>
+ </ul>
+
+<h3>Current Staging</h3>
+ <ul>
+  <li>This is where tickets that are in the Staging Theme, but haven't been QA'd or Design Reviewed go. </li>
+  <li>This is the backlog of tickets that are ready to be QA'd, whoever is doing Quality Assurance on this project can go to this State and take tickets to work on. </li>
+ </ul>
+
+<h3>QA In Progress </h3>
+ <ul>
+  <li>Another state for visibility, used by the QA person to keep track of what they are currently working on. </li>
+ </ul>
+
+<h3>QA Approved</h3>
+ <ul>
+  <li>Once QA feels the story is working as expected, has been thoroughly tested, and has no bugs, it goes into the QA Approved state. </li>
+  <li>Tickets in this state are essentially "Done" from the project perspective. However, new bugs can pop up later in the development lifecycle which can pull QA Approved tickets back out to QA Rejected. </li>
+ </ul>
+
+<h3>QA Rejected</h3>
+ <ul>
+  <li>This is a place for Stories to go if they are rejected by QA.</li>
+  <li>Any story that is rejected by QA should have the associated bug that caused the rejection linked to the original story.</li>
+  <li>Don't put Bugs in this state, as bugs will go into the Bugs state.</li>
+ </ul>
+
+<h3>Bugs</h3>
+ <ul>
+  <li>Any bugs found by either QA, Developers, Clients, or whoever else manages to break the site.</li>
+  <li>This acts similarly to the backlog, in which developers or designers can look here to grab additional work and divided it amongst themselves. </li>
+  <li>If a bug goes through the ticket lifecycle and is denied by QA due to the fix not being sufficient, that bug comes back to the Bug state (Don't put it in QA Rejected, as that is only for stories) </li>
+ </ul>
+
+<h3>Deployed</h3>
+ <ul>
+  <li>The final state in the ticket lifecycle, everything that has been approved by QA will eventually go here once the Site has launched to the customer's isntance.</li>
+  </ul>
+
+<h3>Not Doing</h3>
+ <ul>
+  <li>Sometimes tickets are created with the intent of being done or fixed, but for a multitude of reasons it is decided that it cannot or will not be done. </li>
+  <li>Tickets are placed in this state so that there is a history of the intent and conversations around why a specific piece of work won't be done. </li>
+</ul>
+
+<p>Okay so there are all the states, and yes we realize there are a lot of them. As a QA, most of these states you won't be dealing with too much, but it is a good idea to keep your eye on them from time to time. </p>
+<p>The main states you will be using are: </p> 
+ <ul> 
+  <li>Current Staging</li>
+  <li>QA In Progress</li>
+  <li>QA Approved</li>
+  <li>QA Rejected</li>
+  <li>Bugs</li>
+  </ul>
+</div>

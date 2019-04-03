@@ -1,0 +1,100 @@
+import styles from '../document.general.css'
+import Paper from '@material-ui/core/Paper';
+import BlenderTicket from '../Images/BlenderTicketEx.png';
+
+<div className="Post">
+
+<div className="Image-container">
+  <img src="https://media.giphy.com/media/1xoAy1PDL5Zkc/giphy.gif" className="Image" alt="logo" />
+</div>
+
+<p> So you started testing a feature and it isn't behaving as expected, or it broke completely (it's more likely than you think). Now what? </p>
+
+<p>Well we have to document this issue somehow so that the developer can easily understand and recreate the problem we found (then hopefully fix it).</p>
+
+<p>Hopefully you are using some kind of issue tracking software or application to handle this. Here at PxU we are using Clubhouse (which is where you read the initial feature story earlier).</p>
+
+<p>There isn't a lot to writing a ticket, but ideally we are being super thorough so the developer doesn't have to come back and ask you a million questions for the hundreds of bugs you file.</p>
+
+<p>Since we are using Clubhouse, let's go over the fields and process that I use when creating a new ticket.</p>
+
+<div className="Image-container">
+  <img src={BlenderTicket} className="Image" alt="Ticket_Example" />
+</div>
+
+<h2>Field 1: Story Title</h2>
+ <p>The Story Title is important because it is the first thing people see when scanning through the open bugs. Make sure that it is as descriptive as possible without being super long, include any info regarding the issue being on a specific platform and prefix it with the component it is breaking if applicable.</p>
+ <p><b>Example</b>: [Header] Navigation items display too close together in Safari</p>
+ <p>The above example shows that the component that is broken is the [Header], this helps the developers know that the person who created the Header component will probably be best to work on this ticket.
+ It also clearly explains in basic english that the navigation items appear too close to each other. There is no need to explain exactly how many pixels apart it is or any technical info like that, just a good overview of the issue.
+ Finally, we are sure to mention that the problem is in Safari only. This helps in triaging the issue since it is only a problem in that one browser the devs immediately know where to recreate the problem and to not bother opening the site in Chrome or Firefox when trying to recreate it.</p>
+
+<h2>Field 2: Description</h2>
+ <p>In Clubhouse the Description is a pretty vast field. Any information about the issue should go in the description, and you want to give as much information as possible.
+ Due to this we have created the template below. You are going to want to paste this template into the description field for every Bug you create in Clubhouse (or use the "Bug" template in clubhouse which has this filled out for you).</p>
+
+```
+# Description
+
+Include a short description describing the story that can be understood by all stakeholders.
+
+# Technical information
+
+Include any technical information that can be used to aid the development or QA process.
+
+If it is a bug report, include the following
+1. Version,
+2. Operating system,
+3. Browser(s),
+4. Steps to reproduce.
+
+# Acceptance criteria
+
+* List a set of requirements for the story to be completed.
+
+```
+
+<p>Things should be pretty self explainitory within the template, but for completeness I am going to go over each section to quickly describe what is expected for your input into each section.</p>
+<div>
+<h3>Description</h3>
+  <ul>
+   <li>Overall description of the issue, it is important here to completely describe the issue at a high level. Usually a more verbose version of the Story Title.</li>
+   <li>You are going to want to include pictures or video in this section. If it is just a visual issue or something that can be easily explained by a still image, use an image. if it is an interaction issue or a bug that happens due to specific actions, try to make a video to clearly show the issue. </li>
+  </ul>
+
+<h3>Technical information</h3>
+ <ul>
+  <li>Anything super technical that you didn't include in the Description. This includes things like error messages, or maybe even solutions to the problem if you know a little about programming and how the problem arose. </li>
+ </ul>
+
+<h3>Version</h3>
+ <ul>
+  <li>This is just the version of the software you found the bug in, this is good to include in case there is a large backlog of issues and the developer doesn't get to this bug until far in the future.</li>
+ </ul>
+
+<h3>Operating System</h3>
+ <ul>
+  <li>This is only sometimes useful, mostly useful when it is a device specific problem (Ex: only happens on iOS). Usually you can set this to "Any".</li>
+ </ul>
+
+<h3>Browser(s)</h3>
+ <ul>
+  <li>This one is more useful, sometimes issues happen in a handful of browsers but not all of them. List the browsers you were able to recreate the bug in here.</li>
+ </ul>
+
+<h3>Steps to Reproduce</h3>
+ <ul>
+  <li>This is the most important field in the whole ticket. Be sure to tell in detail the steps to recreate the issue, including what pages to go to and the exact steps the developer needs to take in order to be able to reliabley recreate the issue on their own device.</li>
+ </ul>
+
+<h3>Acceptance Criteria</h3>
+ <ul>
+  <li>This should say what you expect the behaviour to be in order for you to judge this ticket as completed. Generally you will be re-iterating the expected behaviour of the feature, but sometimes you will need to discuss it with the developer or the PM to ensure that the desired outcome of the fix is agreed upon.</li>
+ </ul>
+</div>
+
+<p>Once the Description of the ticket is filled out, we can move on to putting it in the right place in the Clubhouse Workflow. </p>
+
+<p>Generally you are going to be putting it in the Bug column of Clubhouse, as you are filing a bug. You will also want to relate it to any Stories that use the component you are testing, this is just part of the PxU Agency workflow which we will get into next. </p>
+
+</div>

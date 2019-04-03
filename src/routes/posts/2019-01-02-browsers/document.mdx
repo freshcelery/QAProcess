@@ -1,0 +1,38 @@
+import styles from '../document.general.css'
+import Paper from '@material-ui/core/Paper';
+
+<div className="Post">
+
+<div className="Image-container">
+  <img src="https://media.giphy.com/media/anjRJ4nv9WJzO/giphy.gif" className="Image" alt="logo" />
+</div>
+
+<p> Now that you fully understand how the feature should work, and you know what it should look like down to the pixel, we can get to work testing. Or can we? Okay, so there is a little bit of set up we have to do before we start testing to make our lives a little easier.</p>
+
+<h2> Browsers </h2>
+<p> A big part of testing software is making sure that every user is going to have a similar experience. To ensure that, we are going to have to test and re-test each feature in a variety of different browsers and platforms. 
+At PxU we have quite a few supported platforms, the agency browser test list is as follows. </p>
+<ul>
+ <li>Chrome</li>
+ <li>Safari</li>
+ <li>Firefox</li>
+ <li>Edge</li>
+ <li>Safari iPhone</li>
+ <li>Chrome iPhone</li>
+ <li>Safari iPad</li>
+ <li>Chrome iPad</li>
+ <li>Chrome Android</li>
+ </ul>
+
+<p> The first three browsers are really easy, just install the latest versions of Chrome, Safari and Firefox on your laptop. </p>
+<Paper className="Tip">
+<h2> Tip </h2>
+I suggest creating a new Desktop to hold each browser, that way you can just switch between desktops quickly instead of trying to find the correct window and getting lost between browsers all hosting the exact same website.
+</Paper>
+<br />
+<p> For Edge you can use something like Browserstack to test, or you can set up a windows VM and test on that. Browserstack is the easiest and is close enough to reality (even though the performance isn't great). If you need to do performance testing, a powerful VM is your best bet.</p>
+
+<p>For mobile devices, the real thing is ALWAYS best. Testing on real devices has a ton of advantages, the most obvious being you won't have to guess if the performance problems are due to emulation or not. Also using real devices makes debugging a lot easier, as you can debug directly on devices through things like XCode or the Chrome Dev tools. Additionally, the end user isn't going to be using an emulated device, they are going to be using the real thing and we might as well do the same. </p>
+
+<p>However, sometimes it is difficult to get all applicable devices together, or you are working remotely. In that case I suggest using Browserstack as it has (in my opinion) the best representation of how a real device behaves. It also supports a bunch of different devices that you can switch between while you test to ensure that nothing new comes up between the resolution of an iPhone XR and an iPhone 6 Plus (or whatever).</p>
+</div>

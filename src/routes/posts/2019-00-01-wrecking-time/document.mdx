@@ -1,0 +1,30 @@
+import styles from '../document.general.css'
+import Paper from '@material-ui/core/Paper';
+
+<div className="Post">
+
+<div className="Image-container">
+  <img src="https://media.giphy.com/media/1xoAy1PDL5Zkc/giphy.gif" className="Image" alt="logo" />
+</div>
+
+<p>So now we are sure that the basic use cases are all working as expected, things are good to go right? Wrong again. </p>
+
+<p> A user has never once done exactly what is expected of them when using software. They get a form that asks for an email and try to write their dissertation on "The Fall of the Nuclear Family as Told by Season 3-12 of The Simpsons" in it.
+It is the developers job to stop them from doing these foolish things, or at the least give a reasonable output when they do. It is our job to make sure that they thought of these things. </p>
+
+<p>This is somewhat a free-for-all. There isn't much I can really teach here, but more things you will learn overtime. Common traps and pitfalls in development and things that developers generally forget. 
+This is your chance to be malicious, try to break the feature in any ways you can think of. Click a button 100 times really fast, try to type incredibly long names into form fields, just be a jerk in general. </p>
+
+<p>Some of the things you do will be even too wild to even consider a user ever doing, but do it anyway and tell someone that it breaks their feature. It isn't entirely up to you what is important to fix and what isn't, it is a group effor to make sure you provide everyone with all the information possible. 
+Remember, this is the fun part of QA. You get to go wild and break people's precious code, so have a good time and try to be as creative as possible. </p>
+
+<p>The biggest tip I can give to you when doing this is REMEMBER WHAT YOU ARE DOING. I know it is easy to get lost when you are doing all this crazy stuff trying desperately to prove that the "minor change that doesn't need to be tested" is actually going to push us hurdeling toward the heat-death of the universe, but if you can't tell them how to break the code again it is completely useless.
+The developer needs good steps on how to recreate the bugs you find, so pay attention to everything you do so you can tell them when you eventually break it. </p>
+
+<Paper className="Tip">
+ <h2> Tip </h2>
+This exploratory and destructive process can be done while doing the intial feature testing once you are confident in your abilities, but it is best to keep it separate when you are just getting on board.
+Remember, assuring quality in software takes time and attention. Try not to overload yourself and miss obvious, critical issues because you are trying to do too much at once in order to get things done quickly.
+</Paper>
+
+</div>
