@@ -1,0 +1,132 @@
+import styles from "../document.general.css";
+import Paper from "@material-ui/core/Paper";
+import GitPullNext from "../Images/git-pull-next.png";
+import GitNewBranch from "../Images/create-new-branch.png";
+import GithubPRPage from "../Images/pr-step-1.png";
+import GithubPRSource from "../Images/pr-step-2.png";
+import PRPage from "../Images/pr-page.png";
+import PRReviewers from "../Images/pr-reviewers.png";
+
+<div className="Post">
+
+<div className="Image-container">
+  <img
+    src="https://img.devrant.com/devrant/rant/r_292990_JmRu7.gif"
+    className="Image"
+    alt="logo"
+  />
+</div>
+ <h2>Getting a project from github</h2>
+ <p>Before you can get started working with Git and Github, you need a repository to work on. The primary repositories we will be working on are the <b>BCCS-B2C</b> and <b>BCCS-B2B</b> repositories.</p>
+ <p>In order to clone these repositories to begin work, you have to navigate to the appropriate github pages and perform a clone operation. This process is described in detail <a href="https://help.github.com/en/articles/cloning-a-repository">here</a>.</p>
+ <p>The current urls for the repositories are as follows</p>
+  <ul>
+    <li> <b>BCCS-B2C</b>: <a href="https://github.com/pixelunion/bccs-b2c">https://github.com/pixelunion/bccs-b2c</a></li>
+    <li> <b>BCCS-B2C</b>: <a href="https://github.com/pixelunion/bccs-b2b">https://github.com/pixelunion/bccs-b2b</a></li>
+  </ul>
+
+<h2> Pulling from Next </h2>
+<p> The equivalent of <i>Master</i> on the BCCS builds is called <i>Next</i>. This will always be the latest code with all the newest code changes that have passed PRs (Pull Requests). This is also the build that releases will be based upon. </p>
+<p> Before you create a branch and start working on your own code changes, it is incredibly important that you have pulled down the latest changes to <i>Next</i>. This will make your life a lot easier in the future and help you avoid any issues when trying to merge your code changes back to <i>Next</i> once your PR has been approved. </p>
+<p> From the directory you cloned the Github repository to, do the following commands </p>
+
+```.js
+git checkout Next
+git pull
+```
+
+<img src={GitPullNext} class="Image" alt="pull-of-next" />
+<p> You will now have the latest code for the <i>Next</i> branch, and the next steps is to create your own branch to begin working.</p>
+
+<h2> Creating your own branch </h2>
+<p> To begin writing a code fix, or an automated test, we are going to have to create a branch for our code to work in.</p>
+<p> A branch is essentially a pointer to a commit on the stack of commits. Here you <i>branch</i> off that commit, making that commit the bottom of the stack and adding on top of it. Once you have completed all your work, you can merge that branch back into the master branch.</p>
+<p> A good guide on the details of what a branch is (and more git knowledge) is <a href="https://git-scm.com/book/en/v1/Git-Branching-What-a-Branch-Is">here</a>.</p>
+<p> The naming scheme we will be following for creating branches is: <b>chore/&lt;CH-number&gt;/tests/&lt;branch-name&gt;</b></p>
+
+```.js
+git checkout next
+git checkout -b chore/45506/tests/newsletter-tests
+```
+
+<img src={GitNewBranch} class="Image" alt="create-new-branch" />
+<p> the <i>-b</i> argument states that we are creating a new branch. This new branch is a local branch and won't be shown in the remote repository until you push it. </p>
+
+<h2> Rebasing your branch with Master </h2>
+<p> Once you have been working on a branch for a while, it will no doubt become out of date with the master branch (<i>Next</i>). In order to pull in all of the changes from master to our local branch, we have to rebase.</p>
+<p> Remember, we should always be rebasing before pushing our branch, to ensure that we have the latest code and there are no merge issues.</p>
+
+```.js
+git checkout next
+git pull
+git checkout <branch_name>
+git rebase next
+```
+
+<p> As always, you want to do a pull on <i>next</i> before doing anything to ensure the master branch is up to date. After you are sure the code on <i>next</i> is up to date, switch back to the branch you were working on and perform a rebase against <i>next</i>.</p>
+<p> Now your local branch will have all your code changes, and the changes that were merged to master while you were working. You are now ready to push your branch to the remote repository.</p>
+
+<h2> Pushing to remote </h2>
+<p> Up until this point, the branch we have been working on has been only available on our machine (local). For us to create a PR (Pull Request) and get our code into master, we must push our code to the remote respository.</p>
+<p> <b>Remember</b>: Always rebase and make sure all of your changes are committed before performing a Push to remote.</p>
+
+```.js
+git push origin <branch_name>
+```
+
+<Paper className="Tip">
+ <h2> Tip </h2>
+If there are multiple people working on the branch and a lot of changes have happened, occasionally the Push will fail. If this happens you can force push by using the <i>-f</i> argument on the push command. 
+Be sure to discuss this with a developer on the project before performing a force push, as it can cause issues with the commit history for everyone else working on the branch.
+</Paper>
+<h2> Creating a Pull Request </h2>
+<p>Once you feel your code is complete and you are ready for peer review, you have to create a Pull Request on Github. The purpose of a Pull Request is for review of code before merging into the master branch. Any code you want to commit to Master must go through a code review before merging to ensure we aren't publishing any mistakes.</p>
+
+<p>Navigate to the Github repository for the project you are working on and click on the <b>New Pull Request</b> button at the top left of the screen.</p>
+
+<img src={GithubPRPage} class="Image" alt="pull-request-page" />
+
+<p>Once the PR screen appears, make sure that the <b>Base</b> is set to <i>next</i> and the <b>Compare</b> is set to your branch. </p>
+
+<img src={GithubPRSource} class="Image" alt="pull-request-source" />
+
+<p> Now the only thing to do is fill out the template for information on your PR. This step is important so that whoever reviews your code will have a full understanding of the intent of your changes.</p>
+
+<ul>
+  <li>Clubhouse Story
+     <ul>
+       <li> The number and a link to the clubhouse story </li>
+       <li> The clubhouse number should also be a part of the branch name </li>
+     </ul>
+  </li>
+  <li> What does this do?
+    <ul>
+      <li> This one is pretty self explainatory, just describe the purpose of the PR </li>
+      <li> For automated test cases I like to add in a description for each test in the suite </li>
+    </ul>
+  </li>
+  <li> How do you manually test this?
+     <ul>
+       <li> How QA or a Developer can go about testing this PR</li>
+       <li> For automated tests, just add the command for running the test (npm run cy:run)</li>
+     </ul>
+  </li>
+  <li> When should this be merged?
+     <ul>
+       <li> Generally the answer is right away, but if you are worried about breaking something or having to wait to merge put that info here.</li>
+     </ul>
+  </li>
+  <li> What should be considered when merging this?
+     <ul>
+       <li> If this code changes has any breaking changes or modifies behaviour of existing expectations be sure to note that here.</li>
+       <li> Additionally, any components outside of the component being changed that might be impacted can be listed here.</li>
+     </ul>
+  </li>
+</ul>
+<img src={PRPage} class="Image" alt="pr-info-page" />
+<p> The last thing you want to do before finishing the Pull Request is add reviewers via the control on the right hand side of the screen. Generally you want to add the developers on the project and a QA. </p>
+<img src={PRReviewers} class="Image" alt="pr-reviewers" />
+
+<p> Then all you have to do is complete the Pull Request. Anyone who you added as a reviewer will add comments to your code which you can change over time. Once changes are made to your branch based on feedback, just perform another push to the remote branch. </p>
+
+</div>

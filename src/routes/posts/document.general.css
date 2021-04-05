@@ -1,20 +1,24 @@
-.Image{
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 100%;
+.Image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
 }
 
-.Image-container{
-    padding-bottom: 1rem;
+.SmallImage {
+  max-width: 150px;
 }
 
-.Tip{
-    font-size: 0.9rem;
-    padding: 0.5rem;
+.Image-container {
+  padding-bottom: 1rem;
 }
 
-.Tip h2{
-    margin: 0;
-    text-decoration: underline;
+.Tip {
+  font-size: 0.9rem;
+  padding: 0.5rem;
+}
+
+.Tip h2 {
+  margin: 0 !important;
+  text-decoration: underline;
 }

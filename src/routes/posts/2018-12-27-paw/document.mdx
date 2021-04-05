@@ -1,0 +1,107 @@
+import styles from "../document.general.css";
+import Paper from "@material-ui/core/Paper";
+import CompleteOrder from "../Images/CompleteOrder.png";
+import OrderNumberUrl from "../Images/OrderNumberUrl.png";
+import IntegrationOrderSearch from "../Images/IntegrationOrderSearch.png";
+import CompleteXMLBody from "../Images/CompleteXMLBody.png";
+import NewPawRequest from "../Images/NewPawRequest.png";
+import IntegrationURLAndPost from "../Images/IntegrationURLAndPost.png";
+import PAWAuth from "../Images/PAWAuth.png";
+import PAWBody from "../Images/PAWBody.png";
+import PAWSuccess from "../Images/PAWSuccess.png";
+
+<div className="Post">
+
+<div className="Image-container">
+  <img
+    src="https://imgix.setapp.com/app/94/2358/icon-1571417290-5da9ecca5d042.png?auto=format&ixlib=php-2.3.0&q=75&w=320"
+    className="Image"
+    alt="logo"
+  />
+</div>
+
+<p>In order to make requests to the integration as a QA, we must do so by sending the requests manually. This document should guide you through the steps required to perform a few basic requests to the integration, and validate that those requests were successful.</p>
+
+<h3> Tools </h3>
+<p> Before getting started, there are a few things that will have to be in place.</p>
+<p> You will need PAW on your machine and you will have to be added to the PxU group on PAW to gain access, or you can use a trial account in the meantime</p>
+<a href="https://paw.cloud/">Get PAW here</a>
+<p> Secondly, you will need to access the integration, the default integration instance we use for bccs-dev is <a href="https://bcldb-integration-dev.shopifycloud.com">https://bcldb-integration-dev.shopifycloud.com</a>, the passwords can be found in 1Password.</p>
+<p> Finally, you will need access to the existing payloads. We have a bunch of default payloads stored on google drive <a href="https://drive.google.com/drive/u/0/folders/1Z4yZ_b5R1cGwXY379vy5lo1IAUYYFmCL">here</a>, so just request access to those for use later in this document.</p>
+
+<h3> Fulfilling an order through Integration and PAW </h3>
+<p> The most useful use case for PAW and integration is to fulfil and order. To do this you will first have to complete an order on the <a href="">BCCS-DEV</a> site. Just add some products to your cart, and complete the checkout.</p>
+<img src={CompleteOrder} className="Image" alt="Complete Order Log" />
+<p> Once your order has been completed, navigate to the order_lins page of the <a href="https://bccs-dev.myshopify.com/admin/orders">BCCS-DEV Shopify Admin</a> and find your Order. Open the order page and copy the number at the end of the url.</p>
+<img src={OrderNumberUrl} className="Image" alt="Order Number from URL" />
+<br />
+<p> The next step is to load up the integration's order endpoint, by default you can find that <a href="https://bcldb-integration-dev.shopifycloud.com/admin/order_lines">here</a>.</p>
+<p> Perform a search on the page by pressing <i>CMD + F</i> and input the number you copied from the Order page URL.</p>
+<p> The page should now highlight all Order Lines from that Order. You will have to use each Order Line number on this page to generate our custom request to the endpoint.</p>
+<img src={IntegrationOrderSearch} className="Image" alt="Integration Order Search" />
+<br />
+<p> Now that we have a list of all the Line Order Numbers, we can manually create an XML Body for our integration request.</p>
+<p> The purpose of this request is to fulfil an order or,  in this case, partially fulfil it.</p>
+<p> Go to the following Google Document <a href="https://drive.google.com/drive/u/0/folders/1Z4yZ_b5R1cGwXY379vy5lo1IAUYYFmCL">here</a> and copy the XML to your favorite text/code editor (I use VSCode).</p>
+<br />
+<p> For the most part, we will be leaving the XML as it is. The only section we are really concerned about is the <code>&lt;/ship:shipLines&gt;</code> section.</p>
+<p> Each <code>&lt;/ship:shipLine&gt;</code> in the <code>&lt;/ship:shipLines&gt;</code> section is an order line, or a product in the order. It represents the ordered quantity and fulfilled amount of the order as well as a bunch of other information that isn't required for order fulfillment.</p>
+<p> The tags we are interested in within the <code>&lt;/ship:shipLine&gt;</code> object are: </p>
+<ul>
+<li>
+  <code>
+    &lt;ship:orderLineNumber&gt;
+  </code>  
+</li>
+<li>
+  <code>
+    &lt;ship:systemReference&gt;
+  </code>
+</li>
+<li>
+  <code>
+&lt;ship:orderQuantity&gt;
+          &lt;com:value xmlns:com="http://common.services.bcldb.com"&gt;5.000&lt;/com:value&gt;
+&lt;/ship:orderQuantity&gt;
+  </code>
+</li>
+<li>
+  <code>
+&lt;ship:shipQuantity&gt;
+            &lt;com:value xmlns:com="http://common.services.bcldb.com">0.000&lt;/com:value&gt;
+&lt;/ship:shipQuantity&gt;
+  </code>
+</li>
+</ul>
+
+<p>The <code>&lt;ship:orderLineNumber&gt;</code> is the field that represents the Order Line ID for the individual product on your order. You can find the Order Line ID in the integration's api.</p>
+<p>The <code>&lt;ship:systemReference&gt;</code> holds the Order ID that we took from the url in the Order Admin page previosuly. This field will be the same for each <code>&lt;ship:shipLine&gt;</code> object in the payload. This field represents the order and since we are only fulfilling a single order, the order number will be the same throughout.</p>
+<p>The <code>&lt;value&gt;</code> element within <code>&lt;ship:orderQuantity&gt;</code> represents the amount of that item ordered. This is what you originally ordered when you created the order.</p>
+<p> The <code>&lt;value&gt;</code> element within <code>&lt;ship:shipQuantity&gt;</code> represents the amount you want to fulfil. When using this element, you can set it to any number equal to or below the <code>&lt;ship:orderLineNumber&gt;</code> value.</p>
+
+<p>Now that we have an understanding of all the elements we want to edit, and an example XML document to edit, we need to find the correct data and start filling out the fields.</p>
+<p>Return to the API Endpoint you opened earlier and take a look at the highlighted results (Remember we did a search for the Order Id). There should be a highlighted line for each product you ordered in your completed order.</p>
+<p>Create a copy of the entire <code>&lt;ship:shipLine&gt;</code> object for each product you ordered.</p>
+<p><i>Example: If I ordered 5 products, I would want my xml document to have 5 <code>&lt;ship:shipLine&gt;</code> objects</i></p>
+<p>Now, ensure that for each <code>&lt;ship:shipLine&gt;</code> object, the <code>&lt;ship:systemReference&gt;</code> element is set to the Order ID we got from the Shopify Admin Order URL previously.</p>
+<p>Next, set the <code>&lt;ship:orderLineNumber&gt;</code> to a unique <i>Line ID</i> from the API Endpoint. This represents the actual item in your order.</p>
+<p>Then you will set the <code>&lt;value&gt;</code> element within <code>&lt;ship:orderQuantity&gt;</code> to the original ordered amount. You can find this in either your order confirmation email or in the shopify order admin.</p>
+<p>Finally, we are going to set the <code>&lt;value&gt;</code> element within <code>&lt;ship:shipQuantity&gt;</code> to the amount we want to fulfil for each item. Remember, this has to be be equal or less than the <code>&lt;value&gt;</code> in <code>&lt;ship:orderQuantity&gt;</code>. An equal value will represent a fully fulfilled line item, while anything lower represents partial fulfillment.</p>
+
+<img src={CompleteXMLBody} className="Image" alt="Complete XML Body" />
+
+<br />
+<p>We now have an xml document ready to send in order to validate out Shopify order. The next step is bringing that into PAW and setting everything up in order to send a successful request.</p>
+<p>The first thing we want to do in PAW is create a new request. This can be done by clicking on <b>File</b> and then clicking <b>New</b> or using the <i>Command + N</i> shortcut.</p>
+<p>With a new PAW file created we can name it whatever we want and add a description to help us remember what this file was for when we come back to it in the future.</p>
+<img src={NewPawRequest} className="Image" alt="New PAW Request" />
+<p>The first real thing we want to do is add the endpoint url to the request. When sending through to the dev environment, that url will be <a href="https://bcldb-integration-dev.shopifycloud.com/api/products">https://bcldb-integration-dev.shopifycloud.com/api/products</a></p>
+<p>Next, since we are going to be sending data to the endpoint, our request must be using POST. Next to the URL input it will say <b>GET</b> by default, changing this to <b>POST</b> will allow our request to send data to the endpoint.</p>
+<img src={IntegrationURLAndPost} className="Image" alt="PAW URL and POST" />
+<p>Since the endpoint is "secured", we will need to add credentials to our request in order for it to be accepted. To do this, navigate to the <b>Auth</b> tab and set the auth type to <b>Basic Auth</b>. Once it is set, input the credentials username: <i>dev</i> password: <i>dev</i>.</p>
+<img src={PAWAuth} className="Image" alt="PAW Auth" />
+<p>Finally we just need to add the data required to send our order fulfillment through. To do that, navigate to the <b>Body</b> tab and paste the xml content we modified earlier.</p>
+<img src={PAWBody} className="Image" alt="PAW Body" />
+<p>Now we can send our request, do this by pressing <i>Command + Enter</i> on your keyboard. The request should be successful and return a 200 header with succes true in the body.</p>
+<img src={PAWSuccess} className="Image" alt="PAW Success" />
+</div>

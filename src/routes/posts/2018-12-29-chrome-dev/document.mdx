@@ -1,0 +1,182 @@
+import styles from "../document.general.css";
+import Paper from "@material-ui/core/Paper";
+import ChromeMenuIcon from "../Images/chrome-dev-menu-icon.png";
+import PopOutIcon from "../Images/pop-out-icon.png";
+import ChromeDevOpen from "../Images/chrome-dev-on-open.png";
+import ChromeDevNoCache from "../Images/chrome-no-cache.png";
+import InspectIcon from "../Images/inspect-button.png";
+import InspectingElement from "../Images/inspecting-element.png";
+import EditingDom from "../Images/editing-dom-inspector.png";
+import ConsoleLog from "../Images/chrome-console-log.png";
+import ConsoleJS from "../Images/console-javascript.png";
+import ChromeNetwork from "../Images/chrome-network.png";
+import ChromeNetworkFilter from "../Images/chrome-network-filter.png";
+import FilterInput from "../Images/filter-input.png";
+import OnlineOffline from "../Images/online-offline.png"
+
+<div className="Post">
+
+<div className="Image-container">
+  <video className="Image" controls playsinline autoplay muted loop>
+    <source
+      src="https://zippy.gfycat.com/HappyOldChinchilla.webm"
+      type="video/webm"
+    />
+  </video>
+</div>
+
+<h2>Introduction</h2>
+<p> One of the most useful tools to developers and QA alike is the browser developer tools. All dev tools work somewhat similar, with a few caveats between them. Most should have the same basic components.</p>
+
+<ul>
+  <li> Console </li>
+  <li> Element Inspector </li>
+  <li> Network traffic </li>
+  <li> Code debugger </li>
+</ul>
+<p> The Chrome Developer tools has a few other neat features that we can take advantage of, most notable being the <b>Device Emulator</b> and <b>no-cache mode</b> which we will go into a bit later.</p>
+
+<h2>Dev Tools - What are they good for?</h2>
+<p> Before the dev tools are even open, let's discuss why they are important to the developer and QA process.</p>
+<p> Any time you run into an issue on the web, it is ideal to provide as much information as possible so either you are someone else is able to fix it. The Chrome dev tools provide a few ways of obtaining critical information that can greatly reduce the amount of troubleshooting and communication needed to solve pesky issues.</p>
+
+<ul>
+  <li>
+    {" "}
+    Console - The web console will print out any errors or warnings that appear
+    as you browse the website. These are especially useful to give to the
+    developer who is fixing the issue as it lets them know the source file of
+    the error and gives them an idea of what may be causing it.{" "}
+  </li>
+  <li>
+    {" "}
+    Element Inspector - This is very useful for troubleshooting CSS and HTML
+    issues, as you get to see the entire DOM (Document Object Model) to view
+    each html element and it's corresponding CSS. If something looks strange on
+    the site, the html/css is often the culprit.{" "}
+  </li>
+  <li>
+    {" "}
+    Network Traffic - Every file that is used by the website is requested, and
+    often we are sending outgoing requests to other servers in our code. The
+    Network Traffic tab lets us see the requests made, how long they take, and
+    the responses. Very useful in the event something isn't loading or is
+    performing poorly{" "}
+  </li>
+  <li>
+    {" "}
+    Code Debugger - This is most often used by the developers, but if you have
+    some code chops as a QA you can use it too. This allows you to debug the
+    live javascript code on the site to help you track down the cause of issues{" "}
+  </li>
+  <li>
+    {" "}
+    No-cache - This one is very useful. Since we are often getting new code
+    changes for the same website and retesting over and over, often the browser
+    will cache older code and re-serve it to you when you are expecting a new
+    fix. Running the browser with no-cache on lets us be certain we are getting
+    the latest files and are thus clear up any weird versioning confusion.{" "}
+  </li>
+  <li>
+    {" "}
+    Device Emulator - This is a quick and dirty way to check the website at
+    certain sizes, not nearly as good as using Browserstack or a real device,
+    but good for a quick check if you are short on time{" "}
+  </li>
+</ul>
+
+<h2>Opening the Chrome Dev Tools</h2>
+
+<p> Now that we know why we want to use the dev tools, let's open it up and see all the cool things we can do with it. </p>
+<p> On Mac the shortcut to open dev tools is `Command + Option + J`, and on windows it is `f12`. You can also `Ctrl + Click` on an element in chrome and select the `Inspect` option to directly view that element in the <b>Element Inspector</b>.</p>
+<p> Once the dev tools are open, there is a little set-up we need to do. First, I like to set the Dev Tools window to be separate from the chrome window I am viewing it in, so we can continue to test the site in full resolution.</p>
+
+<img src={ChromeDevOpen} className="Image" alt="chrome-tools-open" />
+
+<p> To change how the dev tools window is situation, press the three horizontal dot button <img src={ChromeMenuIcon} class="SmallImage" alt="option-icon"/> at the top right of the dev tools and select the option that looks like a window on top of another window <img src={PopOutIcon} class="SmallImage" alt="pop-out-icon" /></p>
+<p> Secondly we should turn on the no-cache mode so that our websites don't cache older versions or data we don't want to keep around. To do this, either open the dotted-menu again and select <b>Settings</b> or press the `f1` key. Once the Settings are open scroll down to the `Network` section and enable the checkbox for the `Disable cache (While DevTools open)` option. Now whenever you are on a page that has DevTools open, the cache will be disabled</p>
+
+  <img src={ChromeDevNoCache} className="Image"  alt="no-cache-enabled" /> 
+<p> There are a lot of other options that you can enable and disable in the settings, though most of them are probably not applicable to your day-to-day use. However, I suggest you take a quick look and see if there are any that seem useful to you and your workflow. </p>
+
+<h2> The Element Insepctor </h2>
+
+<p> We have the Dev Tools opened and configured to our liking, so let's put it to use.</p>
+<p> The Element Inspector is one of the most useful tools for web development. It allows us to view the full page DOM (Document Object Model) and navigate through every html element and view each element's CSS and the CSS heirarchy.</p>
+<p> Additionally, it allows us to search the dom using element selectors or xpath so that we can find specific instances of elements. This is really useful when trying to create automated tests that need to select specific elements and is an invaluable way to test your selector before putting it into the automation codebase. </p>
+<p> Let's start by selecting a elements in the dom to debug. Say you have a website and one of the components is displaying strangely or in an incorrect way. With the DevTools open on the <b>Elements</b> tab, select the `Selector` <img src={InspectIcon} class="SmallImage" alt="selector-arrow-icon" />. With the `Selector` enabled, tab back to the page you are debugging and just click on the element that is having trouble. The DevTools will navigate to that element in the dom and show it's HTML in the main view and CSS on the right side.</p>
+
+<img src={InspectingElement} className="Image"  alt="elemented-selected" />  
+<p> From this view you can see the entire CSS specificity list and all of the attributes that are enabled for that html element. The CSS menu shows all CSS that is applying to that element in order of specificity, as you go down the list the specificity lowers. This is a good place to check to see things like if the element has proper z-index, or if expected CSS properties are being overridden due to specificity issues.</p>
+<p> In the HTML DOM view, you can see the element and all it's HTML attributes, including IDs, Classes, Values, Inline CSS, and more. This is often very helpful because an element's state is often described through use of classes, so we have the ability to make sure the correct classes are enabled when interacting with the element. </p>
+
+<p> Another very useful part of the Element Inspector is the ability to add and remove HTML and CSS on the fly. Often if you think you have a solution to an issue, or you want to make a manual change and see how the element behaves, you can do some testing through the Element Inspector. When you double click on the CSS or HTML attributes, they become editable and you can make any changes you desire. You can also add new CSS or even HTML elements through this view.</p>
+
+<img src={EditingDom} className="Image" alt="editing-attributes" />
+
+<h3> Searching for Elements </h3>
+<p> In addition to manually clicking on elements using the `Selector` tool, you can also easily search for elements using the built in search functionality. This is paticularly useful when something is not visible on screen, or may be obfuscated by another element rendering it difficult to click.</p>
+<p> You can use the search by pressing `Ctrl + F` while on the Elements screen. </p>
+<p> There are 2 Primary ways to select elements using the search </p>
+
+  <ul>
+    <li> CSS Selectors
+      <ul>
+        <li>The simplest way of selecting elements in the Elements tab.</li>
+        <li>Example: <i>.className > p</i> Will find all paragraphs that have the parent with class of 'className'</li>
+        <li><a href="https://www.w3schools.com/cssref/css_selectors.asp">Full Reference Link</a></li>
+      </ul>
+    </li>
+    <li> XPath
+      <ul>
+        <li>A more complex way of selecting elements. Although it is more complex it can also make more specific requests than CSS Selectors, and is often the best option if you are willing to learn how to properly use it.</li>
+        <li>Example: <i>//*[contains(@class,'hero')]/a[contains(@href, 'col')]</i> Will find all <i>a</i> elements which href contains <i>col</i> and have a parent element with a class name containing <i>hero</i></li>
+        <li><a href="https://www.w3schools.com/xml/xpath_syntax.asp">Full Reference Link</a></li>  
+      </ul>
+    </li>
+  </ul>
+  <h2> Console </h2>
+  <p> The console is definitely the second most useful tool in the dev tools for QA and developers alike. The console provides log output, errors, and warnings as well as the ability to run local javascript to perform some quick tests. </p>
+  <p> The most important thing you will be using the console for is retreiving errors and warnings for developers. In the image below you can see a series of errors (highlighted in red), and warnings (highlighted in yellow).</p>
+  <img src={ConsoleLog} class="Image" alt="console-log" />
+  <p> You can also configure which levels of logs you want to see by clicking the <b>Default Levels</b> drop-down menu. Here you can configure whether you want to see verbose, info, warning, and error level logs.</p> 
+  <br />
+  <p> In Addition to viewing logs, you an also execute javascript from within the console. This can often be useful if you are experiencing some strange behaviour with things like form submission or looking for the state of specific attributes in the DOM.</p>
+  <img src={ConsoleJS} class="Image" alt="javascript-console" />
+  <p> Using the console to execute javascript is very simple, just input some code like the previous image.</p>
+
+<h2> Network Traffic </h2>
+<p> The Network traffic is supremely useful when debugging web servers and can also be very useful for figuring out issues with external apps.</p>
+<p> The <b>Network</b> tab shows all requests received by the site, and information about those requests. It provides the response data, payloads, request time and more.</p>
+
+  <img src={ChromeNetwork} class="Image" alt="network-tab" />
+  <p> As shown in the above image, the network tab shows a list of all requests made, in order of the time it was made. The primary things you are going to be looking at here are the request <i>Name</i>, the <i>Status</i> and the <i>Time</i>.</p>
+  <ul>
+    <li> Name 
+       <ul>
+         <li>The name is just the URL of the request</li>
+         <li>This is incredibly important to know, because it lets you know the source of the request, whether it is somethign served by shopify or an external app.</li>
+       </ul>
+    </li>
+    <li> Status
+      <ul>
+        <li>The Status shows the respone status of the request</li>
+        <li>The response status indicates how the request was handled, whether it succeeded or failed, whether it was cached or not, and more.</li>
+        <li>In order to use the status effectively, you must know common response codes. Common codes are 200 (OK), 304 (Cahed), and 404 (Not Found). A full list can be found <a href="https://www.restapitutorial.com/httpstatuscodes.html">here</a></li>
+      </ul>
+    </li>
+    <li> Time
+      <ul>
+        <li>The time indicator is often the most useful, as it shows the time a request takes to complete</li>
+        <li>This is often useful for debugging why a site is performing slowly and the source of the slow request</li>
+      </ul>
+    </li>
+  </ul>
+  <p>You also have the ability to filter through all the requests in the <b>Network</b> tab. This makes it easier to find specific requests by either name or response code, or even filter by data type.</p>
+  <p>To filter by name or a specific string, you just have to interact with the <i>Filter</i> input <img src={FilterInput} class="SmallImage" alt="filter-input" />at the top of the screen. Input your search term and it will filter the requests</p>
+  <img src={ChromeNetworkFilter} class="Image" alt="network-filter" />
+  <p>To the right of the filter input are all the pre-built filter options, these allow you to filter by certain data-types easily. For example you can click the <i>Img</i> filter to only show requests for images.</p>
+  <br />
+  <p> The last useful component in the Network tab, is the Offline/Online mode and request throttling. With this feature, you are able to either emulate a disconnected environment (no internet), or throttle your connection to emulate being on a slower network.</p>
+  <p> To use this feature, just find the Offline checkbox and Online drop-down to the right of the filters <img src={OnlineOffline} class="SmallImage" alt="online-offline-toggle" />. You can enable offline mode to emulate a disconnected environment, or switch to a slower connection by using the Online drop-down.</p> 
+</div>
